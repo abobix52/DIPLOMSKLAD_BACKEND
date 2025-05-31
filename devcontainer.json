@@ -1,0 +1,30 @@
+{
+  "name": "Python 3",
+  "image": "mcr.microsoft.com/devcontainers/python:0-3.12", // Или любое другое базовое изображение
+  "features": {
+    // Эта фича устанавливает и настраивает PostgreSQL
+    "ghcr.io/devcontainers/features/postgresql:1": {
+      "version": "latest", // или конкретную версию, например "14"
+      "initdb": true, // Инициализирует новую базу данных при первом запуске
+      "ports": [5432], // Пробрасывает порт 5432, чтобы к нему можно было обращаться
+      "username": "codespace", // Опционально: пользователь PostgreSQL, по умолчанию 'codespace' или 'postgres'
+      "password": "your_strong_password", // Опционально: пароль для пользователя, рекомендуется установить
+      "database": "mydatabase" // Опционально: имя базы данных для создания, по умолчанию 'codespace'
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ]
+    }
+  },
+  // Эти порты также будут проброшены и доступны
+  "forwardPorts": [5432, 8000], // 5432 для PostgreSQL, 8000 для FastAPI
+  // Команды, которые выполняются после создания контейнера.
+  // Обычно Feature сам запускает PostgreSQL, но можно добавить для уверенности:
+  "postCreateCommand": "sudo service postgresql start",
+  "remoteUser": "codespace"
+}
